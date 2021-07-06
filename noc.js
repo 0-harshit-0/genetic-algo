@@ -66,16 +66,16 @@ class Rockets {
 		this.hit = false;
 	}
 	fit() {
-		let d = Vector2D.distance(this.pos, target);
+		let d = Vector2D.distance(target, this.pos);
 		this.fitness = (1/d)**2;
-		if (d == 0) {
-			this.fitness *= 2;
+		if (d == 10) {
+			this.fitness *= 10;
 		}
 		if (this.stop) {
-			this.fitness *= 0.1;
+			this.fitness /=2;
 		}
 		if (this.pos.x > canvas.width || this.pos.x < 0 || this.pos.y > canvas.height || this.pos.y < 0) {
-			this.fitness *= 0.1;
+			this.fitness /=2;
 		}
 	}
 	draw() {
@@ -125,7 +125,7 @@ class DNA {
 	static crossover(x, y) {
 		let child = new Rockets(1);
 		for (var i = 0; i < child.dna.genes.length; i++) {
-			if (i < 9) {
+			if (i < 25) {
 				child.dna.genes[i] = x.dna.genes[i];
 			}else {
 				child.dna.genes[i] = y.dna.genes[i];
@@ -148,7 +148,6 @@ class Population {
 	constructor() {
 		this.populationArray = new Array();
 		this.matingpool= new Array();
-		//this.mutationRate = 0.01;
 		this.generation = 0;
 
 		for (var i = 0; i < 50; i++) {
@@ -182,7 +181,7 @@ class Population {
 	}
 	live() {
 		for (var i = 0; i < this.populationArray.length; i++) {
-			this.populationArray[i].stop = obs.collide(this.populationArray[i]);
+			this.populationArray[i].stop = false;//obs.collide(this.populationArray[i]);
 			if (!this.populationArray[i].stop) {
 				this.populationArray[i].update();
 			}
@@ -222,7 +221,7 @@ function animation() {
 	}
 
 	ctx.setTransform(1,0,0,1,0,0);
-	obs.draw();
+	//obs.draw();
 
 	inter = requestAnimationFrame(animation);
 }
