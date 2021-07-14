@@ -67,16 +67,14 @@ class Rockets {
 	}
 	fit() {
 		let d = Vector2D.distance(target, this.pos);
-		this.fitness = (1/d)**2;
+		this.fitness = (1/d);
 		if (d == 10) {
 			this.fitness *= 10;
 		}
 		if (this.stop) {
 			this.fitness /=2;
 		}
-		if (this.pos.x > canvas.width || this.pos.x < 0 || this.pos.y > canvas.height || this.pos.y < 0) {
-			this.fitness /=2;
-		}
+		
 	}
 	draw() {
 		ctx.save();
