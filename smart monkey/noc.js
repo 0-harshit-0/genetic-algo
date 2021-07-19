@@ -47,13 +47,13 @@ class DNA {
 })();
 
 function animation(argument) {
+	matingpool = new Array(), temp = new Array();
+	ctx.clearRect(0,0,canvas.width, canvas.height);
+	
 	ctx.beginPath();
 	ctx.font = "30px Arial";
 	ctx.fillText(`target: genetic algorithm`, 200, 100);
 	ctx.closePath();
-	
-	matingpool = new Array(), temp = new Array();
-	ctx.clearRect(0,0,canvas.width, canvas.height);
 
 	let y = 50;
 	population.forEach(x=> {
