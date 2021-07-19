@@ -6,19 +6,6 @@ var ctx = canvas.getContext('2d');
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-//var mouse = new Vector2D();
-//var center = new Vector2D(canvas.width/2, canvas.height/2);
-var mouse = new Vector2D();
-addEventListener('mousemove', (e)=>{
-	mouse.x = e.x;
-	mouse.y = e.y;
-});
-addEventListener("keypress", (e) => {
-	if (e.key == 'a') {
-		draw();
-	}
-	//animation();
-});
 addEventListener('resize', (e) => {
 	canvas.width = innerWidth;
 	canvas.height = innerHeight;
@@ -60,11 +47,17 @@ class DNA {
 })();
 
 function animation(argument) {
+	ctx.beginPath();
+	ctx.font = "30px Arial";
+	ctx.fillText(`target: genetic algorithm`, 200, 100);
+	ctx.closePath();
+	
 	matingpool = new Array(), temp = new Array();
 	ctx.clearRect(0,0,canvas.width, canvas.height);
 
 	let y = 50;
 	population.forEach(x=> {
+		
 		y+= 30;
 		ctx.beginPath();
 		ctx.font = "30px Arial";
