@@ -1,1 +1,1 @@
-# smart-rockets
+# genetic algorithm
