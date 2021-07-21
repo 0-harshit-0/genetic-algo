@@ -6,19 +6,6 @@ var ctx = canvas.getContext('2d');
 canvas.width = innerWidth;
 canvas.height = innerHeight-50;
 
-//var mouse = new Vector2D();
-//var center = new Vector2D(canvas.width/2, canvas.height/2);
-var mouse = new Vector2D();
-addEventListener('mousemove', (e)=>{
-	mouse.x = e.x;
-	mouse.y = e.y;
-});
-addEventListener("keypress", (e) => {
-	if (e.key == 'a') {
-		animation();
-	}
-	//animation();
-});
 addEventListener('resize', (e) => {
 	canvas.width = innerWidth;
 	canvas.height = innerHeight-50;
