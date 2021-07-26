@@ -52,7 +52,7 @@ function animation(argument) {
 	
 	ctx.beginPath();
 	ctx.font = "30px Arial";
-	ctx.fillText(`target: genetic algorithm`, 200, 100);
+	ctx.fillText(`target: genetic algorithm`, 500, 100);
 	ctx.closePath();
 
 	let y = 50;
