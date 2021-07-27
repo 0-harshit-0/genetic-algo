@@ -6,6 +6,19 @@ var ctx = canvas.getContext('2d');
 canvas.width = innerWidth;
 canvas.height = innerHeight-50;
 
+//var mouse = new Vector2D();
+//var center = new Vector2D(canvas.width/2, canvas.height/2);
+var mouse = new Vector2D();
+addEventListener('mousemove', (e)=>{
+	mouse.x = e.x;
+	mouse.y = e.y;
+});
+addEventListener("keypress", (e) => {
+	if (e.key == 'a') {
+		animation();
+	}
+	//animation();
+});
 addEventListener('resize', (e) => {
 	canvas.width = innerWidth;
 	canvas.height = innerHeight-50;
@@ -89,7 +102,10 @@ class Face {
 		population[i] = new Face();
 	}
 })();
+let genCount = 0;
+let gen = document.querySelector('#gen');
 function animation() {
+	genCount++;
 	matingpool= new Array();
 	temp = new Array ();
 
@@ -132,23 +148,41 @@ function animation() {
 	});
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
 	//console.log(population)
+	gen.innerHTML = `generation: ${genCount}, selected population numbers:`;
 }
-
-addEventListener('click', (e)=> {
-	if (e.x > 0 && e.x < (194+97)) {
+function drawSelected(x, y) {
+	s.circle(x, y, 50);
+	s.stroke();
+}
+let wid = Math.floor(canvas.width/7);
+canvas.addEventListener('click', (e)=> {
+	drawSelected(e.x, e.y);
+	if (e.x > 0 && e.x < wid*(2-(1/2.5))) {
 		population[0].dna.fit += 1;
-	}else if (e.x > (194+97) && e.x < ((194*2)+97)) {
+		gen.innerHTML += `1`;
+	}else if (e.x > wid*(2-(1/2.5)) && e.x < wid*(3-(1/2.5))) {
 		population[1].dna.fit += 1;
-	}else if (e.x > ((194*2)+97) && e.x < ((194*3)+97)) {
+		gen.innerHTML += `2`;
+
+	}else if (e.x > wid*(3-(1/2.5)) && e.x < wid*(4-(1/2.5))) {
 		population[2].dna.fit += 1;
-	}else if (e.x > ((194*3)+97) && e.x < ((194*4)+97)) {
+		gen.innerHTML += `3`;
+
+	}else if (e.x > wid*(4-(1/2.5)) && e.x < wid*(5-(1/2.5))) {
 		population[3].dna.fit += 1;
-	}else if (e.x > ((194*4)+97) && e.x < ((194*5)+97)) {
+		gen.innerHTML += `4`;
+
+	}else if (e.x > wid*(5-(1/2.5)) && e.x < wid*(6-(1/2.5))) {
 		population[4].dna.fit += 1;
-	}else if (e.x > ((194*5)+97) && e.x < ((194*6)+97)) {
+		gen.innerHTML += `5`;
+
+	}else if (e.x > wid*(6-(1/2.5)) && e.x < wid*(7-(1/2.5))) {
 		population[5].dna.fit += 1;
+		gen.innerHTML += `6`;
+
 	}
+	
 });
-let gen = document.querySelector('#gen');
-gen.innerHTML = `generation: `;
+
+gen.innerHTML = `generation: ${genCount}, selected population numbers:`;
 
