@@ -9,16 +9,7 @@ canvas.height = innerHeight-50;
 //var mouse = new Vector2D();
 //var center = new Vector2D(canvas.width/2, canvas.height/2);
 var mouse = new Vector2D();
-addEventListener('mousemove', (e)=>{
-	mouse.x = e.x;
-	mouse.y = e.y;
-});
-addEventListener("keypress", (e) => {
-	if (e.key == 'a') {
-		animation();
-	}
-	//animation();
-});
+
 addEventListener('resize', (e) => {
 	canvas.width = innerWidth;
 	canvas.height = innerHeight-50;
@@ -33,7 +24,7 @@ let temp = new Array();
 class DNA {
 	constructor() {
 		this.genes = new Array(len);
-		this.fit = 1;
+		this.fit = 0;
 	}
 	fill() {
 		for (var i = 0; i < len; i++) {
@@ -41,7 +32,7 @@ class DNA {
 		}
 	}
 	fitness() {
-		this.fit = 1;
+		this.fit = 0;
 	}
 	static reproduce() {
 		let ab = new Vector2D(Math.floor(Math.random()*matingpool.length), Math.floor(Math.random()*matingpool.length));
@@ -105,12 +96,11 @@ class Face {
 let genCount = 0;
 let gen = document.querySelector('#gen');
 function animation() {
+
 	genCount++;
 	matingpool= new Array();
 	temp = new Array ();
-
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
-	
 	ctx.clearRect(0,0,canvas.width, canvas.height);
 
 	population.forEach(x=> {
@@ -125,13 +115,14 @@ function animation() {
 		let parent = new Vector2D(matingpool[ab.x], matingpool[ab.y]);
 		//console.log(parent)
 		let child = new Face();
-		for (var i = 0; i < len; i++) {
-
-			if (i <= Math.floor(len*Math.random())) {
-				//console.log(parent.x.genes)
-				child.dna.genes[i] = parent.x.dna.genes[i];
-			}else {
-				child.dna.genes[i] = parent.y.dna.genes[i];
+		if (matingpool.length) {
+			for (var i = 0; i < len; i++) {
+				if (i <= Math.floor(len/2)) {
+					//console.log(parent.x.genes)
+					child.dna.genes[i] = parent.x.dna.genes[i];
+				}else {
+					child.dna.genes[i] = parent.y.dna.genes[i];
+				}
 			}
 		}
 		
@@ -141,12 +132,14 @@ function animation() {
 	population = temp;
 	population.forEach(z=> {
 		ctx.translate(Math.floor(canvas.width/7), 100);
+		//mutate
 		if (Math.random() < 0.3) {
 			z = new Face();
 		}
 		z.draw();
 	});
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
+
 	//console.log(population)
 	gen.innerHTML = `generation: ${genCount}, selected population numbers:`;
 }
@@ -154,29 +147,29 @@ function drawSelected(x, y) {
 	s.circle(x, y, 50);
 	s.stroke();
 }
-let wid = Math.floor(canvas.width/7);
+let wid = Math.floor(canvas.width/6);
 canvas.addEventListener('click', (e)=> {
 	drawSelected(e.x, e.y);
-	if (e.x > 0 && e.x < wid*(2-(1/2.5))) {
+	if (e.x > 0 && e.x < wid) {
 		population[0].dna.fit += 1;
 		gen.innerHTML += `1`;
-	}else if (e.x > wid*(2-(1/2.5)) && e.x < wid*(3-(1/2.5))) {
+	}else if (e.x > wid && e.x < wid*2) {
 		population[1].dna.fit += 1;
 		gen.innerHTML += `2`;
 
-	}else if (e.x > wid*(3-(1/2.5)) && e.x < wid*(4-(1/2.5))) {
+	}else if (e.x > wid*2 && e.x < wid*3) {
 		population[2].dna.fit += 1;
 		gen.innerHTML += `3`;
 
-	}else if (e.x > wid*(4-(1/2.5)) && e.x < wid*(5-(1/2.5))) {
+	}else if (e.x > wid*3 && e.x < wid*4) {
 		population[3].dna.fit += 1;
 		gen.innerHTML += `4`;
 
-	}else if (e.x > wid*(5-(1/2.5)) && e.x < wid*(6-(1/2.5))) {
+	}else if (e.x > wid*4 && e.x < wid*5) {
 		population[4].dna.fit += 1;
 		gen.innerHTML += `5`;
 
-	}else if (e.x > wid*(6-(1/2.5)) && e.x < wid*(7-(1/2.5))) {
+	}else if (e.x > wid*5 && e.x < canvas.width) {
 		population[5].dna.fit += 1;
 		gen.innerHTML += `6`;
 
